@@ -2,7 +2,7 @@ import random
 
 
 status = {
-    'ground':[random.randint(20, 100) for i in range(11)]
+    'ground':[(i*80, random.randint(420, 500)) for i in range(11)]
 }
 
 print(status)
