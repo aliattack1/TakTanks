@@ -1,6 +1,7 @@
 import pygame
 import sys
 
+from generation import status
 
 pygame.init()
 
@@ -32,6 +33,10 @@ while running:
     # here i will add all the drawings like the tanks and the ground later
 
     # here we call the game logic!
+    for index, point in enumerate(status['ground']):
+        if index == 10:
+            break
+        pygame.draw.line(screen, (0, 255, 0), (index*80, point+400), ((index+1)*80, status['ground'][index+1]+400), 4)
 
     pygame.display.flip()
 
