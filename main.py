@@ -30,7 +30,10 @@ while running:
     # ground
     pygame.draw.polygon(screen, (80, 160, 60), status['ground']+[(800, 600), (0, 600)])
 
+
+    # tanks logic
     for tank in tanks:
+        # angle logic
         tank.x +=1
         x = tank.x + 20
         dx = x % 80
@@ -42,9 +45,16 @@ while running:
         y2 = status['ground'][ind2][1]
         angle_rad = math.atan2(y2-y1, 80)
         angle_deg = math.degrees(angle_rad)
-        print(tank.angle)
-        tank.angle -= (tank.angle - (angle_deg)) / (1 + math.log(x))
-        print(tank.angle)
+        tank.angle -= (tank.angle - angle_deg) / (1 + math.log(x))
+
+        # gravity logic
+        ground_height = y1 + (((y2 - y1) / 80) * dx)
+        tank.vy += 0.2
+        tank.y += tank.vy
+
+        if tank.y + 22 > ground_height:
+            tank.y = ground_height - 22
+            tank.vy = 0
 
 
 

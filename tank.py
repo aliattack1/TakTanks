@@ -5,6 +5,7 @@ class Tank(pygame.sprite.Sprite):
         super().__init__()
         self.x = x
         self.y = y
+        self.vy = 0
         self.original_image = pygame.image.load("tank.png").convert_alpha()
         self.image = self.original_image
         self.rect = self.image.get_rect(topleft=(x, y))
