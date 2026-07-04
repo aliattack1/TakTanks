@@ -1,3 +1,5 @@
+import math
+
 import pygame
 import sys
 from generation import status
@@ -15,7 +17,7 @@ tank2 = tank.Tank(640, 400)
 allsprites = pygame.sprite.Group()
 allsprites.add(tank1)
 allsprites.add(tank2)
-
+tanks = [tank1, tank2]
 while running:
     clock.tick(FPS)
     for event in pygame.event.get():
@@ -27,12 +29,35 @@ while running:
 
     # ground
     pygame.draw.polygon(screen, (80, 160, 60), status['ground']+[(800, 600), (0, 600)])
-    if tank2.y < 600:
-        tank2.y += 1
+
+    for tank in tanks:
+        tank.x +=1
+        x = tank.x + 20
+        dx = x % 80
+        lx = x - dx
+
+        ind1 = int(lx / 80)
+        ind2 = ind1 + 1
+        y1 = status['ground'][ind1][1]
+        y2 = status['ground'][ind2][1]
+        angle_rad = math.atan2(y2-y1, 80)
+        angle_deg = math.degrees(angle_rad)
+        print(tank.angle)
+        tank.angle -= (tank.angle - (angle_deg)) / (1 + math.log(x))
+        print(tank.angle)
+
+
+
+
+
 
     allsprites.update()
     allsprites.draw(screen)
     # here we call the game logic!
+
+
+
+
 
     pygame.display.flip()
 pygame.quit()

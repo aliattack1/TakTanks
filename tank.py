@@ -5,8 +5,17 @@ class Tank(pygame.sprite.Sprite):
         super().__init__()
         self.x = x
         self.y = y
-        self.image = pygame.image.load("tank.png").convert_alpha()
+        self.original_image = pygame.image.load("tank.png").convert_alpha()
+        self.image = self.original_image
         self.rect = self.image.get_rect(topleft=(x, y))
 
+        self.rect = self.image.get_rect(center=(x, y))
+
+        # Rotation angle
+        self.angle = 0
+
     def update(self):
-        self.rect = self.image.get_rect(topleft=(self.x, self.y))
+        center = self.rect.center
+        print(center)
+        self.image = pygame.transform.rotate(self.original_image, -self.angle)
+        self.rect = self.image.get_rect(center=center, topleft=(self.x, self.y))
