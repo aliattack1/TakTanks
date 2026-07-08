@@ -15,6 +15,8 @@ class Tank(pygame.sprite.Sprite):
         # Rotation angle
         self.angle = 0
 
+        self.power = 5
+
     def update(self):
         center = self.rect.center
         self.image = pygame.transform.rotate(self.original_image, -self.angle)

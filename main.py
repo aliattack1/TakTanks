@@ -33,6 +33,18 @@ def angr():
     tank1.aim_angle += 1
     return True
 
+bullet = {'current':False, 'x':0, 'y':0, 'vx':0, 'vy':0, 'damage':0}
+
+def shot(tank: tank.Tank):
+    global bullet
+    x, y = tank.rect.center
+    bullet['current'] = True
+    bullet['x'] = x
+    bullet['y'] = y
+    bullet['vx'] = tank.power * math.cos(math.radians(tank.aim_angle))
+    bullet['vy'] = tank.power * math.sin(math.radians(tank.aim_angle))
+
+
 angron = False
 
 while running:
@@ -50,7 +62,7 @@ while running:
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if mouse[1] > 625 and mouse[1] < 675:
                     if 50 < mouse[0] and mouse[0] < 150:
-                        print('fire')
+                        shot(tank1)
                     elif 245 < mouse[0] and mouse[0] < 345:
                         anglon = angl()
                     elif 355 < mouse[0] and mouse[0] < 455:
@@ -111,6 +123,14 @@ while running:
     pygame.draw.rect(screen, (100, 100, 100), (355, 625, 100, 50))
     pygame.draw.rect(screen, (160, 160, 160), (545, 625, 100, 50))
     pygame.draw.rect(screen, (160, 160, 160), (655, 625, 100, 50))
+
+    bullet['x'] = bullet['x'] + bullet['vx']
+    bullet['y'] = bullet['y'] + bullet['vy']
+    bullet['vx'] -= 0.1
+    bullet['vy'] += 0.1
+    pygame.draw.circle(screen, (250, 0, 0), (bullet['x'], bullet['y'] ), 2, 2)
+
+
 
 
     allsprites.update()
